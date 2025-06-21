@@ -1,10 +1,18 @@
 [
     {
-        "original_filename": "secret.txt",
-        "encrypted_filename": "secret.txt.enc",
-        "file_size": 21,
-        "date_added": "2025-06-21 16:06:11",
-        "file_hash": "ca527ea4ac466ded8c256332e7f02b18b5525f4433f523deaad62a1ffd1ce1d7",
+        "original_filename": "notes.txt",
+        "encrypted_filename": "notes.txt.enc",
+        "file_size": 27,
+        "date_added": "2025-06-21 16:26:04",
+        "file_hash": "d9fbf8faec5b0ed7fae56da1ff8d9909595e6072d41178a7cd80f8ea83b91427",
         "version": 1
+    },
+    {
+        "original_filename": "notes.txt",
+        "encrypted_filename": "notes.txt.enc",
+        "file_size": 47,
+        "date_added": "2025-06-21 16:27:08",
+        "file_hash": "b0b919353dda7e3939a9725d2df2820c8f6c23287bc4eaf3e82b34ee9fe4b9f9",
+        "version": 2
     }
 ]

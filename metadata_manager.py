@@ -23,6 +23,20 @@ def calculate_file_hash(content):
 
 def add_metadata(filename, encrypted_filename, content):
     metadata_list = load_metadata()
+    file_hash = calculate_file_hash(content)
+    base_name = os.path.basename(filename)
+
+    matching_files = [entry for entry in metadata_list if entry["original_filename"] == base_name ]
+
+    for entry in matching_files : 
+        if entry["file_hash"] == file_hash:
+            print("⚠️ This exact file version already exists. Skipping metadata entry.")
+            return
+        
+    version = 1
+    if matching_files:
+        latest_version = max(entry["version"] for entry in matching_files)
+        version = latest_version + 1
 
     file_info = {
         "original_filename" : os.path.basename(filename),
@@ -30,7 +44,7 @@ def add_metadata(filename, encrypted_filename, content):
         "file_size": len(content),
         "date_added": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "file_hash" : calculate_file_hash(content),
-        "version": 1
+        "version": version
     }
     
     metadata_list.append(file_info)
