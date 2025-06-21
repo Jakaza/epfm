@@ -3,6 +3,7 @@ import os
 from logger import log_action
 from key_manager import get_fernet
 from metadata_manager import add_metadata
+from auth import verify_password
 
 VAULT_DIR = "vault"
 LOGS_DIR = "logs"
@@ -92,9 +93,11 @@ if __name__ == "__main__":
     if args.command == "init":
         init()
     elif args.command == "add":
-        add_file(args.filename)
+        if verify_password():
+            add_file(args.filename)
     elif args.command == "get":
-        get_file(args.filename)
+        if verify_password():
+            get_file(args.filename)
     else:
         print("❗ Unknown command. Use --help to see options.")
         
