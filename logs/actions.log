@@ -1,3 +1,12 @@
 [2025-06-21 15:40:48] ADD | SECRET.TXT | SUCCESS | File not found
 [2025-06-21 15:41:02] GET | SECRET.TXT | SUCCESS | Encrypted file was found in vault.
 [2025-06-21 15:41:24] ADD | USERS.TXT | FAIL | File not found
+[2025-06-21 15:56:46] ADD | SECRET.TXT | SUCCESS | File not found
+[2025-06-21 15:56:46] ADD | SECRET.TXT | FAIL | the JSON object must be str, bytes or bytearray, not TextIOWrapper
+[2025-06-21 15:57:34] ADD | SECRET.TXT | FAIL | the JSON object must be str, bytes or bytearray, not TextIOWrapper
+[2025-06-21 15:58:38] ADD | SECRET.TXT | FAIL | the JSON object must be str, bytes or bytearray, not TextIOWrapper
+[2025-06-21 15:59:49] ADD | SECRET.TXT | FAIL | 'NoneType' object has no attribute 'append'
+[2025-06-21 16:01:33] ADD | SECRET.TXT | FAIL | 'NoneType' object has no attribute 'append'
+[2025-06-21 16:02:44] ADD | SECRET.TXT | FAIL | 'NoneType' object has no attribute 'append'
+[2025-06-21 16:04:29] ADD | SECRET.TXT | FAIL | 'NoneType' object has no attribute 'append'
+[2025-06-21 16:06:11] ADD | SECRET.TXT | SUCCESS | File not found

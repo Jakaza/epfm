@@ -2,6 +2,7 @@ import argparse
 import os
 from logger import log_action
 from key_manager import get_fernet
+from metadata_manager import add_metadata
 
 VAULT_DIR = "vault"
 LOGS_DIR = "logs"
@@ -32,8 +33,11 @@ def add_file(filename):
         with open(encrypted_filename, "wb") as f:
             f.write(encrypted)
 
+        add_metadata(filename, encrypted_filename, original)
         log_action("add", filename, "success", "File not found")
+        
     except Exception as ex:
+        print(ex)
         log_action("add", filename, "fail", str(ex))
 
 

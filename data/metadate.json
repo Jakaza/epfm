@@ -1,0 +1,10 @@
+[
+    {
+        "original_filename": "secret.txt",
+        "encrypted_filename": "secret.txt.enc",
+        "file_size": 21,
+        "date_added": "2025-06-21 16:06:11",
+        "file_hash": "ca527ea4ac466ded8c256332e7f02b18b5525f4433f523deaad62a1ffd1ce1d7",
+        "version": 1
+    }
+]
