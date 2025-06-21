@@ -1,5 +1,6 @@
 import argparse
 import os
+from key_manager import get_fernet
 
 VAULT_DIR = "vault"
 LOGS_DIR = "logs"
@@ -13,7 +14,24 @@ def init():
     print("🔐 EPFM initialized successfully!")
 
 def add_file(filename):
-    print(f"[+] You selected to add file: {filename}")
+    fernet = get_fernet()
+
+    if not os.path.exists(filename):
+        print("❌ File does not exist!")
+        return
+
+    with open(filename, "rb") as f:
+        original = f.read()
+
+    encrypted = fernet.encrypt(original)
+
+    encrypted_filename = os.path.join(VAULT_DIR, os.path.basename(filename) + ".enc")
+
+    with open(encrypted_filename, "wb") as f:
+        f.write(encrypted)
+
+    print(f"✅ File '{filename}' encrypted and saved to vault as '{encrypted_filename}'")
+
 
 def get_file(filename):
     print(f"[+] You selected to get file: {filename}")
