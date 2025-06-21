@@ -5,6 +5,7 @@ from key_manager import get_fernet
 VAULT_DIR = "vault"
 LOGS_DIR = "logs"
 DATA_DIR = "data"
+RECOVERED_DIR = "recovered"
 
 def init():
     """Initialize the directory structure"""
@@ -33,8 +34,31 @@ def add_file(filename):
     print(f"✅ File '{filename}' encrypted and saved to vault as '{encrypted_filename}'")
 
 
+os.makedirs(RECOVERED_DIR, exist_ok=True)
+
 def get_file(filename):
-    print(f"[+] You selected to get file: {filename}")
+    fernet = get_fernet()
+    enc_filename = os.path.join(VAULT_DIR, filename + ".enc")
+
+    if not os.path.exists(enc_filename):
+        print("❌ Encrypted file not found in vault.")
+        return
+    
+    with open(enc_filename, "rb") as f:
+        encrypted_data = f.read()
+
+    try:
+        decrypted_data = fernet.decrypt(encrypted_data)
+    except Exception as ex:
+        print(f"❌ Failed to decrypt: {e}")
+        return
+
+    recovered_path = os.path.join(RECOVERED_DIR, filename)
+
+    with open(recovered_path , "wb") as f:
+        f.write(decrypted_data)
+
+    print(f"✅ File '{filename}' recovered and saved to '{recovered_path}'")
 
 def setup_cli():
     parser = argparse.ArgumentParser(description="Encrypted Personal File Manager (EPFM)")
