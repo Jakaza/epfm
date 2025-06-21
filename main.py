@@ -1,5 +1,6 @@
 import argparse
 import os
+from logger import log_action
 from key_manager import get_fernet
 
 VAULT_DIR = "vault"
@@ -19,19 +20,21 @@ def add_file(filename):
 
     if not os.path.exists(filename):
         print("File does not exist!")
+        log_action("add", filename, "fail", "File not found")
         return
 
-    with open(filename, "rb") as f:
-        original = f.read()
+    try:
+        with open(filename, "rb") as f:
+            original = f.read()
+            encrypted = fernet.encrypt(original)
 
-    encrypted = fernet.encrypt(original)
+        encrypted_filename = os.path.join(VAULT_DIR, os.path.basename(filename) + ".enc")
+        with open(encrypted_filename, "wb") as f:
+            f.write(encrypted)
 
-    encrypted_filename = os.path.join(VAULT_DIR, os.path.basename(filename) + ".enc")
-
-    with open(encrypted_filename, "wb") as f:
-        f.write(encrypted)
-
-    print(f"File '{filename}' encrypted and saved to vault as '{encrypted_filename}'")
+        log_action("add", filename, "success", "File not found")
+    except Exception as ex:
+        log_action("add", filename, "fail", str(ex))
 
 
 os.makedirs(RECOVERED_DIR, exist_ok=True)
@@ -41,6 +44,7 @@ def get_file(filename):
     enc_filename = os.path.join(VAULT_DIR, filename + ".enc")
 
     if not os.path.exists(enc_filename):
+        log_action("get", filename, "fail", "Encrypted file not found in vault.")
         print("Encrypted file not found in vault.")
         return
     
@@ -49,8 +53,11 @@ def get_file(filename):
 
     try:
         decrypted_data = fernet.decrypt(encrypted_data)
+
+        log_action("get", filename, "success", "Encrypted file was found in vault.")
     except Exception as ex:
-        print(f"Failed to decrypt: {e}")
+        print(f"Failed to decrypt: {ex}")
+        log_action("get", filename, "fail" , str(ex))
         return
 
     recovered_path = os.path.join(RECOVERED_DIR, filename)
